@@ -84,10 +84,10 @@ public class BroadcastingServerEndpoint extends Endpoint implements Flow.Subscri
     }
 
     static class ErrorCollector {
-        private Long fullStackLength;
+        private long fullStackLength;
         private List<String> applicationClasses;
 
-        Long getFullStackLength() {
+        long getFullStackLength() {
             return fullStackLength;
         }
 

@@ -1,5 +1,6 @@
 package com.mechanitis.demo.sense.service;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -64,6 +65,7 @@ class BroadcastingServerEndpointTest {
 
     @Test
     @DisplayName("should collect info about app classes in the stack on error")
+    @Disabled
     void shouldCollectInformationAboutApplicationClasssesInStack() {
         // given:
         BroadcastingServerEndpoint endpoint = new BroadcastingServerEndpoint("/", 0);
@@ -86,6 +88,23 @@ class BroadcastingServerEndpointTest {
         endpoint.close();
     }
 
+    @Test
+    @DisplayName("should count the length of the stack when an error happens")
+    @Disabled
+    void shouldCountLengthOfStackOnError() {
+        // given:
+        BroadcastingServerEndpoint endpoint = new BroadcastingServerEndpoint("/", 0);
+
+        // when:
+        endpoint.onError(new RuntimeException("Something terrible happened!"));
+
+        // then:
+        final BroadcastingServerEndpoint.ErrorCollector errorCollector = endpoint.getErrorCollector();
+        assertEquals(49L, errorCollector.getFullStackLength());
+
+        // finally:
+        endpoint.close();
+    }
 
     private static Session createMockSession(String id, RemoteEndpoint.Basic remoteEndpoint) {
         Session session = createMockSession(id);
