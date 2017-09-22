@@ -63,8 +63,8 @@ class BroadcastingServerEndpointTest {
     }
 
     @Test
-    @DisplayName("should show useful error")
-    void shouldShowUsefulError() {
+    @DisplayName("should collect info about app classes in the stack on error")
+    void shouldCollectInformationAboutApplicationClasssesInStack() {
         // given:
         BroadcastingServerEndpoint endpoint = new BroadcastingServerEndpoint("/", 0);
 
@@ -75,7 +75,7 @@ class BroadcastingServerEndpointTest {
         final BroadcastingServerEndpoint.ErrorCollector errorCollector = endpoint.getErrorCollector();
         assertAll(
                 () -> assertNotEquals(errorCollector.getFullStackLength(),
-                        errorCollector.getApplicationClasses().size()),
+                                      errorCollector.getApplicationClasses().size()),
                 () -> assertEquals(2, errorCollector.getApplicationClasses().size()),
                 () -> assertTrue(errorCollector.getApplicationClasses()
                                                .stream()

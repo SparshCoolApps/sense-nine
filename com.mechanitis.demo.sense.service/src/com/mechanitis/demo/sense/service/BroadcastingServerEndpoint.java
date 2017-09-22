@@ -9,8 +9,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Flow;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.lang.String.format;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
@@ -53,16 +51,7 @@ public class BroadcastingServerEndpoint extends Endpoint implements Flow.Subscri
 
     @Override
     public void onError(Throwable throwable) {
-        final StackWalker stackWalker = StackWalker.getInstance();
-
-        errorCollector.fullStackLength = stackWalker.walk(Stream::count);
-
-        errorCollector.applicationClasses = stackWalker.walk(
-                stackFrameStream -> stackFrameStream
-                        .map(StackWalker.StackFrame::getClassName)
-                        .filter(className -> className.contains("mechanitis"))
-                        .collect(Collectors.toList())
-        );
+        System.out.println(throwable);
     }
 
     @Override
